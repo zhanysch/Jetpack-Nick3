@@ -21,8 +21,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import io.maddevs.startandroidjetpack1.ui.theme.StartAndroidJetpack1Theme
 
 class MainActivity : ComponentActivity() {
@@ -30,29 +32,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-                ListItem(name = "Janysh", prof = "Software Engineer")
-
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircleItem()
             }
 
         }
@@ -60,40 +44,25 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun ListItem(name: String, prof: String) {
-    var counter = remember{
+private fun CircleItem() {
+    var counter = remember {
         mutableStateOf(0)
     }
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)
-            .clickable {
-                counter.value++
-                Log.d("myLog", "clicked")
-            },
-        shape = RoundedCornerShape(15.dp),
-        elevation = 5.dp
-    ) {
-        Box() {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(id = R.drawable.anon),
-                    contentDescription = "image",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .padding(5.dp)
-                        .size(64.dp)
-                        .clip(CircleShape)
-                )
 
-                Column(modifier = Modifier.padding(start = 16.dp))
-                {
-                    Text(text = counter.value.toString())
-                    Text(text = prof)
-                }
+    var colour = remember {
+        mutableStateOf(Color.Blue)
+    }
+
+    Box(modifier = Modifier
+        .size(100.dp)
+        .background(color = colour.value, shape = CircleShape)
+        .clickable {
+            when(counter.value++){
+                10 -> colour.value = Color.Red
+                0 -> colour.value = Color.DarkGray
             }
-        }
-
+        }, contentAlignment = Alignment.Center
+    ) {
+        Text(text = counter.value.toString(), style = TextStyle(Color.White, fontSize = 14.sp))
     }
 }
